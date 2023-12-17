@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">HACKSense</string>
+    <string name="app_widget_description">Shows the status of the hackerspace</string>
+</resources>
