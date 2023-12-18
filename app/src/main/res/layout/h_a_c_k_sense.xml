@@ -9,20 +9,28 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
+        android:layout_marginLeft="5dp"
+        android:layout_toEndOf="@id/HACKName"
         android:text="HACKSense" />
 
     <TextView
-        android:id="@+id/textView2"
-        android:layout_width="match_parent"
+        android:id="@+id/when"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="1970-01-01 00:00:00" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/what"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:text="OPEN/CLOSE" />
+
+    <TextView
+        android:id="@+id/HACKName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/hackerspace_name" />
 
 </RelativeLayout>
