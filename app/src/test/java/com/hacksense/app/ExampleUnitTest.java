@@ -1,4 +1,4 @@
-package com.example.hacksense;
+package com.hacksense.app;
 
 import org.junit.Test;
 
