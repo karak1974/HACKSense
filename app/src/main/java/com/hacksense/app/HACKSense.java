@@ -1,8 +1,10 @@
 package com.hacksense.app;
 
+import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.widget.RemoteViews;
 
@@ -19,6 +21,12 @@ public class HACKSense extends AppWidgetProvider {
         appWidgetManager.updateAppWidget(appWidgetId, views);
         String responseBody = new RequestSender(context, appWidgetManager, appWidgetId, views).execute().get();
 
+        // Reload button
+        Intent intent = new Intent(context, HACKSense.class);
+        intent.setAction("RELOAD");
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_IMMUTABLE);
+        views.setOnClickPendingIntent(R.id.reloadButton, pendingIntent);
+
         State state = State.fromJson(responseBody);
         if (state != null) {
             // Id
@@ -30,7 +38,6 @@ public class HACKSense extends AppWidgetProvider {
 
             // What
             String what;
-            int color;
             if (state.getWhat()) {
                 what = "OPEN";
             } else {
@@ -43,6 +50,15 @@ public class HACKSense extends AppWidgetProvider {
             views.setTextViewText(R.id.lastChecked, lastChecked);
 
             Log.i(TAG, "ID: "+id+" When: "+when+" What: "+what+" Last Checked:"+lastChecked);
+        }
+    }
+
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        super.onReceive(context, intent);
+
+        if ("RELOAD".equals(intent.getAction())) {
+            Log.i(TAG, "Reload button clicked!");
         }
     }
 
