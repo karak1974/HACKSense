@@ -21,17 +21,28 @@ public class HACKSense extends AppWidgetProvider {
 
         State state = State.fromJson(responseBody);
         if (state != null) {
+            // Id
             String id = state.getId();
+
+            // When
             String when = state.getWhen();
-            String what = state.getWhat() ? "OPEN" : "CLOSED";
+            views.setTextViewText(R.id.when, when);
+
+            // What
+            String what;
+            int color;
+            if (state.getWhat()) {
+                what = "OPEN";
+            } else {
+                what = "CLOSED";
+            }
+            views.setTextViewText(R.id.what, what);
+
+            // Last Checked
             String lastChecked = Utils.getCurrentTime();
+            views.setTextViewText(R.id.lastChecked, lastChecked);
 
             Log.i(TAG, "ID: "+id+" When: "+when+" What: "+what+" Last Checked:"+lastChecked);
-
-            // Set values
-            views.setTextViewText(R.id.when, when);
-            views.setTextViewText(R.id.what, what);
-            views.setTextViewText(R.id.lastChecked, lastChecked);
         }
     }
 
@@ -41,9 +52,7 @@ public class HACKSense extends AppWidgetProvider {
         for (int appWidgetId : appWidgetIds) {
             try {
                 updateAppWidget(context, appWidgetManager, appWidgetId);
-            } catch (ExecutionException e) {
-                throw new RuntimeException(e);
-            } catch (InterruptedException e) {
+            } catch (ExecutionException | InterruptedException e) {
                 throw new RuntimeException(e);
             }
         }
