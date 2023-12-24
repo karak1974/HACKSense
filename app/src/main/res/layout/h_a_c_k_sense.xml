@@ -54,22 +54,22 @@
         android:visibility="visible" />
 
     <TextView
-        android:id="@+id/lastCheckedBanner"
+        android:id="@+id/checkedAt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/since"
         android:layout_marginStart="0dp"
         android:layout_marginTop="0dp"
-        android:text="Last Checked:" />
+        android:text="Checked At: " />
 
     <TextView
         android:id="@+id/lastChecked"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/lastCheckedBanner"
+        android:layout_alignTop="@+id/checkedAt"
         android:layout_marginStart="0dp"
         android:layout_marginTop="0dp"
-        android:layout_toEndOf="@+id/lastCheckedBanner"
+        android:layout_toEndOf="@+id/checkedAt"
         android:text="00:00:00" />
 
     <TextView
