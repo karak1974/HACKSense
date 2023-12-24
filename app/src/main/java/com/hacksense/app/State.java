@@ -30,7 +30,6 @@ public class State {
         return what;
     }
 
-    // Method to parse JSON string into MyData object
     public static State fromJson(String jsonString) {
         try {
             JSONObject jsonObject = new JSONObject(jsonString);
