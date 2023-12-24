@@ -7,6 +7,9 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.RemoteViews;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -18,14 +21,12 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.concurrent.ExecutionException;
 
-/**
- * Implementation of App Widget functionality.
- */
 public class HACKSense extends AppWidgetProvider {
+    private static String TAG = "HACKSense";
 
-    // getCurrentTime is for DEBUG only
     private static String getCurrentTime() {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        //SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
         return sdf.format(new Date());
     }
 
@@ -34,14 +35,24 @@ public class HACKSense extends AppWidgetProvider {
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.h_a_c_k_sense);
         views.setTextViewText(R.id.widget_title, widgetText);
 
-        // when
-        String when = getCurrentTime();
-        views.setTextViewText(R.id.when, when);
-        Log.i("HACKSense", "When "+when);
-
         appWidgetManager.updateAppWidget(appWidgetId, views);
         String responseBody = new HttpRequestTask(context, appWidgetManager, appWidgetId, views).execute().get();
-        Log.i("HACKSense", responseBody);
+        Log.i(TAG, responseBody);
+
+        State state = State.fromJson(responseBody);
+        if (state != null) {
+            String id = state.getId();
+            String when = state.getWhen();
+            String what = state.getWhat() ? "OPEN" : "CLOSE";
+            String lastChecked = getCurrentTime();
+
+            Log.i(TAG, "ID: "+id+" When: "+when+" What: "+what+" Last Checked:"+lastChecked);
+
+            // Set values
+            views.setTextViewText(R.id.when, when);
+            views.setTextViewText(R.id.what, what);
+            views.setTextViewText(R.id.lastChecked, lastChecked);
+        }
     }
 
     @Override
@@ -55,7 +66,7 @@ public class HACKSense extends AppWidgetProvider {
                 throw new RuntimeException(e);
             }
         }
-        Log.i("HACKSense", "Update triggered");
+        Log.i(TAG, "Update triggered");
     }
 
     @Override
@@ -100,7 +111,7 @@ public class HACKSense extends AppWidgetProvider {
                     urlConnection.disconnect();
                 }
             } catch (IOException e) {
-                Log.e("HACKSense", "Error making GET request", e);
+                Log.e(TAG, "Error making GET request", e);
                 return null;
             }
         }
@@ -109,7 +120,7 @@ public class HACKSense extends AppWidgetProvider {
         protected void onPostExecute(String result) {
             // Update the widget views with the response body
             if (result != null) {
-                Log.i("HACKSense", "Response Body: " + result);
+                Log.i(TAG, "Response Body: " + result);
                 // You can update the widget views with the response here
                 // For example: views.setTextViewText(R.id.response_body, result);
                 appWidgetManager.updateAppWidget(appWidgetId, views);
