@@ -17,17 +17,20 @@
         android:id="@+id/when"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_alignTop="@+id/since"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="0dp"
+        android:layout_toEndOf="@+id/since"
         android:text="1970-01-01 00:00:00" />
 
     <TextView
         android:id="@+id/what"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/when"
+        android:layout_alignTop="@+id/widget_title"
         android:layout_marginStart="5dp"
         android:layout_marginTop="0dp"
-        android:layout_toEndOf="@+id/when"
+        android:layout_toEndOf="@+id/widget_title"
         android:text="UNKNWN" />
 
     <TextView
@@ -54,7 +57,7 @@
         android:id="@+id/lastCheckedBanner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/what"
+        android:layout_below="@+id/since"
         android:layout_marginStart="0dp"
         android:layout_marginTop="0dp"
         android:text="Last Checked:" />
@@ -63,10 +66,18 @@
         android:id="@+id/lastChecked"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/lastCheckedBanner"
-        android:layout_marginStart="2dp"
-        android:layout_marginTop="-19dp"
+        android:layout_alignTop="@+id/lastCheckedBanner"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
         android:layout_toEndOf="@+id/lastCheckedBanner"
         android:text="00:00:00" />
+
+    <TextView
+        android:id="@+id/since"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/HACKName"
+        android:layout_marginTop="0dp"
+        android:text="Since:" />
 
 </RelativeLayout>

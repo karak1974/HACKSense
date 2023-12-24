@@ -20,6 +20,7 @@
             android:exported="false">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="RELOAD_WIDGET" />
             </intent-filter>
 
             <meta-data

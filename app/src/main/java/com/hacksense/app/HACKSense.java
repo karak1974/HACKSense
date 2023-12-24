@@ -3,6 +3,7 @@ package com.hacksense.app;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -58,7 +59,9 @@ public class HACKSense extends AppWidgetProvider {
         super.onReceive(context, intent);
 
         if ("RELOAD".equals(intent.getAction())) {
-            Log.i(TAG, "Reload button clicked!");
+            AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+            int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(context, HACKSense.class));
+            onUpdate(context, appWidgetManager, appWidgetIds);
         }
     }
 
