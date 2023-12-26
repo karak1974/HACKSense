@@ -1,4 +1,5 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     style="@style/Widget.HACKSense.AppWidget.Container"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
@@ -11,7 +12,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginLeft="5dp"
         android:layout_toEndOf="@id/HACKName"
-        android:text="HACKSense" />
+        android:text="@string/app_name" />
 
     <TextView
         android:id="@+id/when"
@@ -31,7 +32,8 @@
         android:layout_marginStart="5dp"
         android:layout_marginTop="0dp"
         android:layout_toEndOf="@+id/widget_title"
-        android:text="UNKNWN" />
+        android:text="UNKNWN"
+        tools:textStyle="bold" />
 
     <TextView
         android:id="@+id/HACKName"
@@ -42,8 +44,8 @@
     <Button
         android:id="@+id/reloadButton"
         android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_alignTop="@+id/lastChecked"
+        android:layout_height="32dp"
+        android:layout_below="@+id/when"
         android:layout_marginStart="1dp"
         android:layout_marginTop="-6dp"
         android:layout_toEndOf="@+id/lastChecked"
@@ -51,7 +53,8 @@
         android:paddingTop="0dp"
         android:text="↻"
         android:textSize="14sp"
-        android:visibility="visible" />
+        android:visibility="visible"
+        tools:ignore="TouchTargetSizeCheck" />
 
     <TextView
         android:id="@+id/checkedAt"
@@ -60,14 +63,14 @@
         android:layout_below="@+id/since"
         android:layout_marginStart="0dp"
         android:layout_marginTop="0dp"
-        android:text="Checked At: " />
+        android:text="Checked At:" />
 
     <TextView
         android:id="@+id/lastChecked"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/checkedAt"
-        android:layout_marginStart="0dp"
+        android:layout_marginStart="5dp"
         android:layout_marginTop="0dp"
         android:layout_toEndOf="@+id/checkedAt"
         android:text="00:00:00" />

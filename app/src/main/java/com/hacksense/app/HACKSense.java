@@ -39,6 +39,7 @@ public class HACKSense extends AppWidgetProvider {
 
             // What
             String what;
+            // Text coloring will be implemented here
             if (state.getWhat()) {
                 what = "OPEN";
             } else {
@@ -50,7 +51,7 @@ public class HACKSense extends AppWidgetProvider {
             String lastChecked = Utils.getCurrentTime();
             views.setTextViewText(R.id.lastChecked, lastChecked);
 
-            Log.i(TAG, "ID: "+id+" When: "+when+" What: "+what+" Last Checked:"+lastChecked);
+            Log.i(TAG, "ID: "+id+" When: "+when+" What: "+what+" Last Checked: "+lastChecked);
         }
     }
 
