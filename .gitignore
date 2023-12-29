@@ -13,3 +13,6 @@
 .externalNativeBuild
 .cxx
 local.properties
+hacksense.keystore
+hacksense.apk
+hacksense.apk.idsig
