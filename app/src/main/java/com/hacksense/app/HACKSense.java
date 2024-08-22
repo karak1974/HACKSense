@@ -14,13 +14,26 @@ import java.util.concurrent.ExecutionException;
 public class HACKSense extends AppWidgetProvider {
     public static String TAG = "HACKSense";
 
+    static void update(Context context) {
+        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+        int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(context, HACKSense.class));
+
+        for (int appWidgetId : appWidgetIds) {
+            try {
+                updateAppWidget(context, appWidgetManager, appWidgetId);
+            } catch (ExecutionException | InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId) throws ExecutionException, InterruptedException {
         CharSequence widgetText = context.getString(R.string.app_name);
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.h_a_c_k_sense);
         views.setTextViewText(R.id.widget_title, widgetText);
 
         appWidgetManager.updateAppWidget(appWidgetId, views);
-        String responseBody = new RequestSender(context, appWidgetManager, appWidgetId, views).execute().get();
+        String responseBody = new RequestSender(appWidgetManager, appWidgetId, views).execute().get();
 
         // Reload button
         Intent intent = new Intent(context, HACKSense.class);
@@ -30,16 +43,12 @@ public class HACKSense extends AppWidgetProvider {
 
         State state = State.fromJson(responseBody);
         if (state != null) {
-            // Id
-            String id = state.getId();
-
             // When
             String when = state.getWhen();
             views.setTextViewText(R.id.when, when);
 
             // What
             String what;
-            // Text coloring will be implemented here
             if (state.getWhat()) {
                 what = "OPEN";
             } else {
@@ -51,7 +60,9 @@ public class HACKSense extends AppWidgetProvider {
             String lastChecked = Utils.getCurrentTime();
             views.setTextViewText(R.id.lastChecked, lastChecked);
 
-            Log.i(TAG, "ID: "+id+" When: "+when+" What: "+what+" Last Checked: "+lastChecked);
+            Log.d(TAG, "Updated successfully");
+        } else {
+            Log.d(TAG, "Update failed, couldn't get state");
         }
     }
 
@@ -60,31 +71,19 @@ public class HACKSense extends AppWidgetProvider {
         super.onReceive(context, intent);
 
         if ("RELOAD".equals(intent.getAction())) {
-            AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-            int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(context, HACKSense.class));
-            onUpdate(context, appWidgetManager, appWidgetIds);
-        }
-    }
-
-    @Override
-    public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        Log.i(TAG, "Update triggered at: "+Utils.getCurrentTime());
-        for (int appWidgetId : appWidgetIds) {
-            try {
-                updateAppWidget(context, appWidgetManager, appWidgetId);
-            } catch (ExecutionException | InterruptedException e) {
-                throw new RuntimeException(e);
-            }
+            Log.i(TAG, "Update triggered at: "+Utils.getCurrentTime());
+            update(context);
         }
     }
 
     @Override
     public void onEnabled(Context context) {
-        // Enter relevant functionality for when the first widget is created
+        Log.i(TAG, "Widget created");
+        update(context);
     }
 
     @Override
     public void onDisabled(Context context) {
-        // Enter relevant functionality for when the last widget is disabled
+        Log.i(TAG, "Widget deleted");
     }
 }
