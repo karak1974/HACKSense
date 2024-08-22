@@ -1,4 +1,8 @@
 # HACKSense widget
+
+**UNDER MAINTAINANCE, USE THE WEBSITE INSTEAD**
+Website: [hsbp.org](https://hsbp.org)
+
 Designed for [Hackserspace Budapest](https://hsbp.org), If you want to use this widget first you have to set it up based on the [HackSense](https://hsbp.org/HackSense) article article.
 
 ### Roadmap
