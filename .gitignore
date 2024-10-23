@@ -1,9 +1,12 @@
 *.iml
 .gradle
 /local.properties
+build/
+!gradle/wrapper/gradle-wrapper.jar
+*.json
+*.db
 
 .DS_Store
-/build
 /captures
 .externalNativeBuild
 .cxx
