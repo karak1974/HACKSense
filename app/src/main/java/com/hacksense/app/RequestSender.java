@@ -2,10 +2,9 @@ package com.hacksense.app;
 
 import static com.hacksense.app.HACKSense.TAG;
 
-import android.appwidget.AppWidgetManager;
-import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.RemoteViews;
+
+import androidx.annotation.Nullable;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -14,19 +13,9 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class RequestSender extends AsyncTask<Void, Void, String> {
-    private final AppWidgetManager appWidgetManager;
-    private final int appWidgetId;
-    private final RemoteViews views;
+public class RequestSender {
 
-    public RequestSender(AppWidgetManager appWidgetManager, int appWidgetId, RemoteViews views) {
-        this.appWidgetManager = appWidgetManager;
-        this.appWidgetId = appWidgetId;
-        this.views = views;
-    }
-
-    @Override
-    protected String doInBackground(Void... params) {
+    public static @Nullable String execute() {
         HttpURLConnection urlConnection = null;
         BufferedReader reader = null;
 
@@ -68,16 +57,5 @@ public class RequestSender extends AsyncTask<Void, Void, String> {
                 urlConnection.disconnect();
             }
         }
-    }
-
-    @Override
-    protected void onPostExecute(String result) {
-        if (result != null) {
-            Log.d(TAG, "Request succeeded, result: " + result);
-        } else {
-            Log.e(TAG, "Request failed or returned null");
-        }
-
-        appWidgetManager.updateAppWidget(appWidgetId, views);
     }
 }
