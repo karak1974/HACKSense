@@ -11,6 +11,7 @@ import android.os.Looper;
 import android.util.Log;
 import android.widget.RemoteViews;
 
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.concurrent.ExecutionException;
@@ -19,7 +20,8 @@ public class HACKSense extends AppWidgetProvider {
     public static String TAG = "HACKSense";
     private static final Handler uiThreadHandler = new Handler(Looper.getMainLooper());
 
-    public static volatile @Nullable State state = null;
+    private static volatile @Nullable State state = null;
+    private static volatile @NotNull String lastChecked = "never";
 
     private static void requestRedraw(Context context) {
 
@@ -43,6 +45,7 @@ public class HACKSense extends AppWidgetProvider {
 
         ConcurrentRequest.startRequest(response -> {
             HACKSense.state = response;
+            lastChecked = Utils.getCurrentTime();
             requestRedraw(context);
         });
     }
@@ -77,7 +80,6 @@ public class HACKSense extends AppWidgetProvider {
             views.setTextViewText(R.id.what, what);
 
             // Last Checked
-            String lastChecked = Utils.getCurrentTime();
             views.setTextViewText(R.id.lastChecked, lastChecked);
 
             Log.d(TAG, "Updated successfully");
